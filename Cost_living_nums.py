@@ -2,6 +2,7 @@
 import pandas as pd
 
 twentyten_csv = pd.read_csv("yrs2010-11.csv", header=[0,1])
+twentyseventeen_csv = pd.read_csv()
 
 """ For quantitative variables, this will be a seven-number summary (mean, standard deviation, minimum, first quartile, median, third quartile, maximum).
 You are welcome to reuse your code from HW 1: Processing or use pandas’ DataFrame.describe method.
@@ -17,6 +18,8 @@ def yr_cost(datafile: DataSeries.pd):
   twoyr_off_nofam = datafile.loc[39:40]
   two_yr_data = datafile[twoyr_live_flt | twoyr_tuit_bk | twoyr_campus | twoyr_off_fam | twoyr_off_nofam]
   two_yr_describe = two_yr_data.describe()
+  two_yr_live_desc = twoyr_live_flt.describe()
+  twoyr_tuit = datafile.loc[30]
   # 4 yr time
   fouryr_live_flt = datafile.loc[6:8]
   fouryr_tuit_bk = datafile.loc[11:12]
@@ -25,6 +28,10 @@ def yr_cost(datafile: DataSeries.pd):
   fouryr_off_nofam = datafile.loc[20:21]
   four_yr_data = datafile[fouryr_live_flt | fouryr_tuit_bk | fouryr_campus | fouryr_off_fam | fouryr_off_nofam]
   four_yr_describe = four_yr_data.describe()
+  four_yr_live_desc = fouryr_live_flt.describe()
+  fouryr_tuit = datafile.loc[30]
+  #later add the other costs into dict
+
   # next need to put into a dictionary so we can also have the value for the tuition costs
 
 
@@ -48,16 +55,49 @@ prices per year. We are doing this to see which elements of students' costs are 
 
 def college_cost_infla(cost: int, yr: int):
   # We can use this for both graphs
+  # it will return a dictionary with the years compared costs
   yrs_cost = {}
   if yr == 2010:
     # There was a price increase of 12.41% from 2010 to 2017
-    cost2017 = cost * 1.1241
-    cost_2017_round = rounded(cost2017, 2)
-    yrs_cost[2017] = cost_2017_round
+    cost2010_17 = cost * 1.1241
+    yrs_cost[2017] = int(cost2010_17)
     # The price increase was -10.44% also know as price decrease from 2010 to 2005
     cost2005 = cost * 0.8956
-    cost_2005_round = rounded(cost2005, 2)
-    yrs_cost[2005] = cost_2005_round
+    yrs_cost[2005] = int(cost_2005)
+  if yr == 2017:
+    # price change from 2017 to 2010 is decrease of 12.41% 
+    cost2017_2010 = cost * 0.8759
+    yrs_cost[2010] = int(cost2017_10)
+    # The price increase was -20.32% also know as price decrease from 2017 to 2005
+    cost2005 = cost * 0.7968
+    yrs_cost[2005] = int(cost_2005)
+  return yrs_cost
+
+"""
+def percent_dif_costs(filename, compfile, yr):
+  # so we do college inflation for each of the costs
+  # maybe I don't make this a function...... so I can be specific with it being 2010 or 2017..
+  # we have the two files we want to compare
+  yrs_cost = yr_cost(filename)
+  other_yr = yr_cost(compfile)
+  # REMEMBER GOT TO TRANSFER EACH THING INTO OTHERS INFLATIONS COST
+  per_dif = {}
+  og_twoyr_tuit = yrs_cost[twoyr_tuit]
+  other_twoyr_tuit = other_yr[twoyr_tuit]
+  two_yr_tuit_dif = (og_twoyr_tuit - other_twoyr_tuit) / ((og_twoyr_tuit + other_twoyr_tuit)/2)"""
+
+
+  
+# REMEMBER GOT TO TRANSFER EACH THING INTO OTHERS INFLATIONS COST 
+# first do it so its yr_cost for both yrs
+# then do it so its college inflation do it for average tuition, and average other for both yrs
+# and now you will do the average tuition of each year and it says to do percent dif for three variables
+# do it like 2005(in 2010 dollars) - 2010, then seperate group 2010-2017, then do 2005(in 2010 dollars) - 2017
+
+
+
+
+
 
 
 
