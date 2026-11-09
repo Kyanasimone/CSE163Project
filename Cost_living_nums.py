@@ -30,7 +30,7 @@ def yr_cost(datafile: DataSeries.pd):
   four_yr_describe = four_yr_data.describe()
   four_yr_live_desc = fouryr_live_flt.describe()
   fouryr_tuit = datafile.loc[30]
-  #later add the other costs into dict
+  # later ADD the other costs into dict
 
   # next need to put into a dictionary so we can also have the value for the tuition costs
 
@@ -108,14 +108,28 @@ ten_tuit_dict_4 = college_cost_infla(ten_tuit_four, 2010)
 seventeen_tuit_dict_4 = college_cost_infla(seventeen_tuit_four, 2017)
 dif_05_10_tuit2 = (ten_tuit_dict_two[2005] - ten_tuit_dict_two[2010])/ ((ten_tuit_dict_two[2005] + ten_tuit_dict_two[2010]) / 2)
 dif_10_17_tuit2 = (ten_tuit_dict_two[2010] - ten_tuit_dict_two[2017])/ ((ten_tuit_dict_two[2010] + ten_tuit_dict_two[2017]) / 2)
-dif_05_17_tuit2 = (seventeen_tuit_two[2005] - seventeen_tuit_two[2017])/ ((seventeen_tuit_two[2005] + seventeen_tuit_two[2017]) / 2)
+dif_05_17_tuit2 = (seventeen_tuit_dict_two[2005] - seventeen_tuit_dict_two[2017])/ ((seventeen_tuit_dict_two[2005] + seventeen_tuit_dict_two[2017]) / 2)
 
 dif_05_10_tuit4 = (ten_tuit_dict_4[2005] - ten_tuit_dict_4[2010])/ ((ten_tuit_dict_4[2005] + ten_tuit_dict_4[2010]) / 2)
 dif_10_17_tuit4 = (ten_tuit_dict_4[2010] - ten_tuit_dict_4[2017])/ ((ten_tuit_dict_4[2010] + ten_tuit_dict_4[2017]) / 2)
 dif_05_17_tuit4 = (seventeen_tuit_dict_4[2005] - seventeen_tuit_dict_4[2017])/ ((seventeen_tuit_dict_4[2005] + seventeen_tuit_dict_4[2017]) / 2)
 
+# for other
+ten_other_two = ten_cost[twoyr_other]
+seventeen_other_two = seventeen_cost[twoyr_other]
+ten_other_four = ten_cost[fouryr_other]
+seventeen_other_four = seventeen_cost[fouryr_other]
+ten_other_dict_two = college_cost_infla(ten_other_two, 2010)
+seventeen_other_dict_two = college_cost_infla(seventeen_other_two, 2017)
+ten_other_dict_4 = college_cost_infla(ten_other_four, 2010)
+seventeen_other_dict_4 = college_cost_infla(seventeen_other_four, 2017)
+dif_05_10_other2 = (ten_other_dict_two[2005] - ten_other_dict_two[2010])/ ((ten_other_dict_two[2005] + ten_other_dict_two[2010]) / 2)
+dif_10_17_other2 = (ten_other_dict_two[2010] - ten_other_dict_two[2017])/ ((ten_other_dict_two[2010] + ten_other_dict_two[2017]) / 2)
+dif_05_17_other2 = (seventeen_other_dict_two[2005] - seventeen_other_dict_two[2017])/ ((seventeen_other_dict_two[2005] + seventeen_other_dict_two[2017]) / 2)
 
-
+dif_05_10_other4 = (ten_other_dict_4[2005] - ten_other_dict_4[2010])/ ((ten_other_dict_4[2005] + ten_other_dict_4[2010]) / 2)
+dif_10_17_other4 = (ten_other_dict_4[2010] - ten_other_dict_4[2017])/ ((ten_other_dict_4[2010] + ten_other_dict_4[2017]) / 2)
+dif_05_17_other4 = (seventeen_other_dict_4[2005] - seventeen_other_dict_4[2017])/ ((seventeen_other_dict_4[2005] + seventeen_other_dict_4[2017]) / 2)
 
 
 
