@@ -9,16 +9,22 @@ You are welcome to reuse your code from HW 1: Processing or use pandas’ DataFr
 
 def yr_cost(datafile: DataSeries.pd):
   # first want to be looking at the two yr stuff and it doesn't have like a MultiIndex, so just saying specific rows
-  cost_dict = {}
   twoyr_live_flt = datafile.loc[25:27]
   twoyr_tuit_bk = datafile.loc[30:31]
   twoyr_campus = datafile.loc[34:35]
   twoyr_off_fam = datafile.loc[37]
   twoyr_off_nofam = datafile.loc[39:40]
   two_yr_data = datafile[twoyr_live_flt | twoyr_tuit_bk | twoyr_campus | twoyr_off_fam | twoyr_off_nofam]
-  two_yr_describe = two_yr_data.describe
-  two_yr_mean = two_yr_describe.loc["mean"]
-
+  two_yr_describe = two_yr_data.describe()
+  # 4 yr time
+  fouryr_live_flt = datafile.loc[6:8]
+  fouryr_tuit_bk = datafile.loc[11:12]
+  fouryr_campus = datafile.loc[15:16]
+  fouryr_off_fam = datafile.loc[18]
+  fouryr_off_nofam = datafile.loc[20:21]
+  four_yr_data = datafile[fouryr_live_flt | fouryr_tuit_bk | fouryr_campus | fouryr_off_fam | fouryr_off_nofam]
+  four_yr_describe = four_yr_data.describe()
+  
 
   
 
