@@ -64,6 +64,7 @@ def college_cost_infla(cost: int, yr: int):
     # The price increase was -10.44% also know as price decrease from 2010 to 2005
     cost2005 = cost * 0.8956
     yrs_cost[2005] = int(cost_2005)
+    yrs_cost[2010] = cost
   if yr == 2017:
     # price change from 2017 to 2010 is decrease of 12.41% 
     cost2017_2010 = cost * 0.8759
@@ -71,6 +72,7 @@ def college_cost_infla(cost: int, yr: int):
     # The price increase was -20.32% also know as price decrease from 2017 to 2005
     cost2005 = cost * 0.7968
     yrs_cost[2005] = int(cost_2005)
+    yrs_cost[2017] = cost
   return yrs_cost
 
 """
@@ -87,12 +89,31 @@ def percent_dif_costs(filename, compfile, yr):
   two_yr_tuit_dif = (og_twoyr_tuit - other_twoyr_tuit) / ((og_twoyr_tuit + other_twoyr_tuit)/2)"""
 
 
-  
 # REMEMBER GOT TO TRANSFER EACH THING INTO OTHERS INFLATIONS COST 
 # first do it so its yr_cost for both yrs
 # then do it so its college inflation do it for average tuition, and average other for both yrs
 # and now you will do the average tuition of each year and it says to do percent dif for three variables
-# do it like 2005(in 2010 dollars) - 2010, then seperate group 2010-2017, then do 2005(in 2010 dollars) - 2017
+# do it like 2005(in 2010 dollars) - 2010, then seperate group 2010-2017(in 2010 dollars), then do
+# 2005(in 2017 dollars) - 2017 we can do it with different yrs dollars for 2005 because its percentages
+
+ten_cost = yr_cost(twentyten_csv)
+seventeen_cost = yr_cost(twentyseventeen_csv)
+ten_tuit_two = ten_cost[twoyr_tuit]
+seventeen_tuit_two = seventeen_cost[twoyr_tuit]
+ten_tuit_four = ten_cost[fouryr_tuit]
+seventeen_tuit_four = seventeen_cost[fouryr_tuit]
+ten_tuit_dict_two = college_cost_infla(ten_tuit_two, 2010)
+seventeen_tuit_dict_two = college_cost_infla(seventeen_tuit_two, 2017)
+ten_tuit_dict_4 = college_cost_infla(ten_tuit_four, 2010)
+seventeen_tuit_dict_4 = college_cost_infla(seventeen_tuit_four, 2017)
+dif_05_10_tuit2 = (ten_tuit_dict_two[2005] - ten_tuit_dict_two[2010])/ ((ten_tuit_dict_two[2005] + ten_tuit_dict_two[2010]) / 2)
+dif_10_17_tuit2 = (ten_tuit_dict_two[2010] - ten_tuit_dict_two[2017])/ ((ten_tuit_dict_two[2010] + ten_tuit_dict_two[2017]) / 2)
+dif_05_17_tuit2 = (seventeen_tuit_two[2005] - seventeen_tuit_two[2017])/ ((seventeen_tuit_two[2005] + seventeen_tuit_two[2017]) / 2)
+
+dif_05_10_tuit4 = (ten_tuit_dict_4[2005] - ten_tuit_dict_4[2010])/ ((ten_tuit_dict_4[2005] + ten_tuit_dict_4[2010]) / 2)
+dif_10_17_tuit4 = (ten_tuit_dict_4[2010] - ten_tuit_dict_4[2017])/ ((ten_tuit_dict_4[2010] + ten_tuit_dict_4[2017]) / 2)
+dif_05_17_tuit4 = (seventeen_tuit_dict_4[2005] - seventeen_tuit_dict_4[2017])/ ((seventeen_tuit_dict_4[2005] + seventeen_tuit_dict_4[2017]) / 2)
+
 
 
 
