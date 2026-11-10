@@ -132,6 +132,21 @@ dif_10_17_other4 = (ten_other_dict_4[2010] - ten_other_dict_4[2017])/ ((ten_othe
 dif_05_17_other4 = (seventeen_other_dict_4[2005] - seventeen_other_dict_4[2017])/ ((seventeen_other_dict_4[2005] + seventeen_other_dict_4[2017]) / 2)
 
 
+# this is for the graph with the costs on average
+ten_cost = yr_cost(twentyten_csv)
+seventeen_cost = yr_cost(twentyseventeen_csv)
+# getting the averages into variables
+ave_cost_ten_two = ten_cost["Mean_2"]
+ave_cost_seventeen_two = seventeen_cost["Mean_2"]
+ave_cost_ten_four = ten_cost["Mean_4"]
+ave_cost_seventeen_four = seventeen_cost["Mean_4"]
+# putting it with inflation
+infla_ten_two = college_cost_infla(ave_cost_ten_two, 2010)
+infla_seventeen_two = college_cost_infla(ave_cost_seventeen_two, 2017)
+infla_ten_four = college_cost_infla(ave_cost_ten_four, 2010)
+infla_seventeen_four = college_cost_infla(ave_cost_seventeen_four, 2017)
+# now can get each point for line graph x= year and y = cost
+
 
 
 
