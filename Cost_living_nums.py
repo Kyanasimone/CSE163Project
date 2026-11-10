@@ -147,6 +147,24 @@ infla_ten_four = college_cost_infla(ave_cost_ten_four, 2010)
 infla_seventeen_four = college_cost_infla(ave_cost_seventeen_four, 2017)
 # now can get each point for line graph x= year and y = cost
 
+# have to make it a connected dictionary
+dic_ave_ten_two = {2005 : infla_ten_two[2005], 2010: infla_ten_two[2010], 2017: infla_ten_two[2017]}
+dic_ave_seventeen_two = {2005 : infla_seventeen_two[2005], 2010: infla_seventeen_two[2010], 2017: infla_seventeen_two[2017]}
+dic_ave_ten_four = {2005 : infla_ten_four[2005], 2010: infla_ten_four[2010], 2017: infla_ten_four[2017]}
+dic_ave_seventeen_four = {2005 : infla_seventeen_four[2005], 2010: infla_seventeen_four[2010], 2017: infla_seventeen_four[2017]}
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+"""df = pd.read_csv('cats.csv')
+sns.relplot(x='age', y='weight', data=df)
+
+# Customizing with mpl
+plt.xlabel('Age (cm)')
+plt.ylabel('Weight (g)')
+plt.title('Avg Cat Weight with Age')"""
+
+fig, ax = plt.subplots(1, figsize=(20,10))
+sns.relplot(x='Year')
 
 
 
