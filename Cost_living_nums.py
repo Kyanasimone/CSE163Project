@@ -1,5 +1,6 @@
 """ This file is to read the cost of living data we have."""
 import pandas as pd
+import matplotlib.pyplot as plt
 
 twentyten_csv = pd.read_csv("yrs2010-11.csv", header=[0,1])
 twentyseventeen_csv = pd.read_csv()
@@ -39,23 +40,11 @@ def yr_cost(datafile: DataSeries.pd):
   return cost
 
 
-
 # with later solved average for variable 2
 other_cost_2010_twoyr = ave_cost_2010_twoyr - tuition_cost_2010_twoyr
 other_cost_2010_fouryr = ave_cost_2010_fouryr - tuition_cost_2010_fouryr
 
 # visualisations
-"""One will compare the college costs against inflation. The other will show the percentage
-difference in the cost of college versus the difference in the cost of other expenses for each year."""
-"""-The cost per year for a two- and four-year institution. You find it within that year's
-dollars. Index “average total cost, by living arrangement”; we will average “On Campus”,
-“Off Campus, living with family”, and “Off Campus, not living with family” per year while keeping
-the “Two-year institute” and “Four-year institute”. We want to see the change in cost per year in those
-years, so then we can find the change in costs due to inflation.
--The cost of tuition, which is in each of the two- and four-year institution categories. We can use
-the average cost minus the tuition cost to get the other fees to be able to compare the changes in
-prices per year. We are doing this to see which elements of students' costs are changing the most.
-"""
 
 def college_cost_infla(cost: int, yr: int):
   # We can use this for both graphs
@@ -80,7 +69,6 @@ def college_cost_infla(cost: int, yr: int):
   return yr_infla
 
 
-# REMEMBER GOT TO TRANSFER EACH THING INTO OTHERS INFLATIONS COST 
 # first do it so its yr_cost for both yrs
 # then do it so its college inflation do it for average tuition, and average other for both yrs
 # and now you will do the average tuition of each year and it says to do percent dif for three variables
@@ -141,7 +129,18 @@ two_yr_results = {"2005-2010":{
   "Other": dif_10_17_other2,
   "Infla": dif_influ_10_17}}}
 
-
+four_yr_results = {"2005-2010":{
+  "Tuit": dif_05_10_tuit4,
+  "Other": dif_05_10_other4,
+  "Infla": dif_influ_05_10},
+                  "2005-2017": {
+  "Tuit": dif_05_17_tuit4,
+  "Other": dif_05_17_other4,
+  "Infla": dif_influ_05_17}},
+                  "2010-2017": {
+  "Tuit": dif_10_17_tuit4,
+  "Other": dif_10_17_other4,
+  "Infla": dif_influ_10_17}}}
 
 # this is for the graph with the costs on average
 ten_cost = yr_cost(twentyten_csv)
@@ -157,14 +156,11 @@ infla_seventeen_two = college_cost_infla(ave_cost_seventeen_two, 2017)
 infla_ten_four = college_cost_infla(ave_cost_ten_four, 2010)
 infla_seventeen_four = college_cost_infla(ave_cost_seventeen_four, 2017)
 # now can get each point for line graph x= year and y = cost
-
 # have to make it a connected dictionary
 dic_ave_ten_two = {2005 : infla_ten_two[2005], 2010: infla_ten_two[2010], 2017: infla_ten_two[2017]}
 dic_ave_seventeen_two = {2005 : infla_seventeen_two[2005], 2010: infla_seventeen_two[2010], 2017: infla_seventeen_two[2017]}
 dic_ave_ten_four = {2005 : infla_ten_four[2005], 2010: infla_ten_four[2010], 2017: infla_ten_four[2017]}
 dic_ave_seventeen_four = {2005 : infla_seventeen_four[2005], 2010: infla_seventeen_four[2010], 2017: infla_seventeen_four[2017]}
-
-import matplotlib.pyplot as plt
 
 fig, ax = plt.subplots(1, figsize=(20,10))
 # then this is for all the axes
@@ -176,19 +172,13 @@ ave_ten_four_x = list(dic_ave_ten_four.keys())
 ave_ten_four_y = list(dic_ave_ten_four.values())
 ave_seventeen_four_x = list(dic_ave_seventeen_four.keys())
 ave_seventeen_four_y = list(dic_ave_seventeen_four.values())
-
+               
 dic_ave_ten_two.plot(x=ave_ten_two_x, y=ave_ten_two_y, ax=ax)
 dic_ave_seventeen_two.plot(x=ave_seventeen_two_x, y=ave_seventeen_two_y, ax=ax)
 dic_ave_ten_four.plot(x=ave_ten_four_x, y=ave_ten_four_y, ax=ax)
 dic_ave_seventeen_four.plot(x=ave_seventeen_four_x, y=ave_seventeen_four_y, ax=ax)
-
 plt.xlabel("Year")
 plt.ylabel("Cost")
 plt.title("Inflation of Each Years Cost")
 plt.legend()
 plt.savefig('InflationPerYear.png')
-
-
-
-
-
