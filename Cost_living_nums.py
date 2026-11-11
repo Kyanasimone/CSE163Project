@@ -5,10 +5,6 @@ import matplotlib.pyplot as plt
 twentyten_csv = pd.read_csv("yrs2010-11.csv", header=[0,1])
 twentyseventeen_csv = pd.read_csv()
 
-""" For quantitative variables, this will be a seven-number summary (mean, standard deviation, minimum, first quartile, median, third quartile, maximum).
-You are welcome to reuse your code from HW 1: Processing or use pandas’ DataFrame.describe method.
-"""
-
 def yr_cost(datafile: DataSeries.pd):
   # first want to be looking at the two yr stuff and it doesn't have like a MultiIndex,
   # so just saying specific rows
@@ -129,6 +125,14 @@ two_yr_results = {"2005-2010":{
   "Other": dif_10_17_other2,
   "Infla": dif_influ_10_17}}}
 
+fig, ax = plt.subplots(1, figsize=(20,10))
+two_yr_results.plot(kind="bar")
+plt.xlabel("Time Period")
+plt.ylabel("Percent Different")
+plt.title("2-Year Instituition Costs Percent Difference")
+plt.legend()
+plt.savefig('TwoYrPercentDif.png')
+
 four_yr_results = {"2005-2010":{
   "Tuit": dif_05_10_tuit4,
   "Other": dif_05_10_other4,
@@ -141,6 +145,14 @@ four_yr_results = {"2005-2010":{
   "Tuit": dif_10_17_tuit4,
   "Other": dif_10_17_other4,
   "Infla": dif_influ_10_17}}}
+
+fig, ax = plt.subplots(1, figsize=(20,10))
+four_yr_results.plot(kind="bar")
+plt.xlabel("Time Period")
+plt.ylabel("Percent Different")
+plt.title("4-Year Instituition Costs Percent Difference")
+plt.legend()
+plt.savefig('FourYrPercentDif.png')
 
 # this is for the graph with the costs on average
 ten_cost = yr_cost(twentyten_csv)
