@@ -9,29 +9,18 @@ def yr_cost(datafile: DataSeries.pd):
   # first want to be looking at the two yr stuff and it doesn't have like a MultiIndex,
   # so just saying specific rows
   cost = {}
-  twoyr_live_flt = datafile.loc[25:27]
-  twoyr_tuit_bk = datafile.loc[30:31]
-  twoyr_campus = datafile.loc[34:35]
-  twoyr_off_fam = datafile.loc[37]
-  twoyr_off_nofam = datafile.loc[39:40]
-  two_yr_data = datafile[twoyr_live_flt | twoyr_tuit_bk | twoyr_campus | twoyr_off_fam | twoyr_off_nofam]
+  twoyr_live_flt = datafile.loc[13:15]
   two_yr_live_desc = twoyr_live_flt.describe()
   for col in two_yr_live_desc:
     cost[col] = two_yr_live_desc[col]
-  twoyr_tuit = datafile.loc[30]
+  twoyr_tuit = datafile.loc[16]
   cost["twoyr_tuit"] = twoyr_tuit
   # 4 yr time
   fouryr_live_flt = datafile.loc[6:8]
-  fouryr_tuit_bk = datafile.loc[11:12]
-  fouryr_campus = datafile.loc[15:16]
-  fouryr_off_fam = datafile.loc[18]
-  fouryr_off_nofam = datafile.loc[20:21]
-  four_yr_data = datafile[fouryr_live_flt | fouryr_tuit_bk | fouryr_campus | fouryr_off_fam | fouryr_off_nofam]
-  four_yr_describe = four_yr_data.describe()
   four_yr_live_desc = fouryr_live_flt.describe()
   for col in four_yr_live_desc:
     cost[col] = four_yr_live_desc[col]
-  fouryr_tuit = datafile.loc[30]
+  fouryr_tuit = datafile.loc[9]
   cost["fouryr_tuit"] = fouryr_tuit
   return cost
 
