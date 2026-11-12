@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 twentyten_csv = pd.read_csv("yrs2010-11.csv", header=[0,1])
-twentyseventeen_csv = pd.read_csv()
+twentyseventeen_csv = pd.read_csv("yrs_cost_2017-18", header=[0,1])
 # the seventeen and ten pages have different info because it is in the current dollars for 2010 which
 # is 2013 september when it was published and doesn't have the same rows
 def yr_cost_seventeen(datafile: DataSeries.pd) -> pd.Series:
@@ -123,10 +123,10 @@ seventeen_other_dict_two = college_cost_infla(seventeen_other_two, 2017)
 ten_other_dict_4 = college_cost_infla(ten_other_four, 2010)
 seventeen_other_dict_4 = college_cost_infla(seventeen_other_four, 2017)
 dif_05_10_other2 = 100 * ((ten_other_dict_two[2010] - ten_other_dict_two[2005])/ ((ten_other_dict_two[2005])))
-dif_10_17_other2 = 100 * ((ten_other_dict_two[2017] - ten_other_dict_two[2010])/ ((ten_other_dict_two[2010]))
-dif_05_17_other2 = 100 * ((seventeen_other_dict_two[2017] - seventeen_other_dict_two[2005])/ ((seventeen_other_dict_two[2005])))
-dif_05_10_other4 = 100 * ((ten_other_dict_4[2010] - ten_other_dict_4[2005])/ ((ten_other_dict_4[2005]))
-dif_10_17_other4 = 100 * ((ten_other_dict_4[2017] - ten_other_dict_4[2010])/ ((ten_other_dict_4[2010]))
+dif_10_17_other2 = 100 * ((ten_other_dict_two[2017] - ten_other_dict_two[2010])/ (ten_other_dict_two[2010]))
+dif_05_17_other2 = 100 * ((seventeen_other_dict_two[2017] - seventeen_other_dict_two[2005])/ (seventeen_other_dict_two[2005]))
+dif_05_10_other4 = 100 * ((ten_other_dict_4[2010] - ten_other_dict_4[2005])/ (ten_other_dict_4[2005]))
+dif_10_17_other4 = 100 * ((ten_other_dict_4[2017] - ten_other_dict_4[2010])/ (ten_other_dict_4[2010]))
 dif_05_17_other4 = 100 * ((seventeen_other_dict_4[2017] - seventeen_other_dict_4[2005])/ (seventeen_other_dict_4[2005]))
 
 # we will also be having a third bar for each two year chunk for the inflation amounts 
