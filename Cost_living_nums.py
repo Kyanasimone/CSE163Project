@@ -69,13 +69,16 @@ def college_cost_infla(cost: int, yr: int):
   # it will return a dictionary with the years compared costs
   yr_infla = {}
   if yr == 2010:
-    # There was a price increase of 12.41% from 2010 to 2017
-    cost2010_17 = cost * 1.1241
+    # remember the dollars for the 2010 were given for in 2013 dollars
+    # There was a price increase of 5.22% from 2013 to 2017
+    cost2010_17 = cost * 1.0522
     yr_infla[2017] = int(cost2010_17)
-    # The price increase was -10.44% also know as price decrease from 2010 to 2005
-    cost2005 = cost * 0.8956
+    # The price increase was -16.16% also know as price decrease
+    # from 2013 to 2005
+    cost2005 = cost * 0.8384
     yr_infla[2005] = int(cost_2005)
-    yr_infla[2010] = cost
+    # from 2013 to 2010 it was a decrease of 6.40%
+    yr_infla[2010] = cost * 0.936
   if yr == 2017:
     # price change from 2017 to 2010 is decrease of 12.41% 
     cost2017_2010 = cost * 0.8759
