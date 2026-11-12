@@ -4,8 +4,9 @@ import matplotlib.pyplot as plt
 
 twentyten_csv = pd.read_csv("yrs2010-11.csv", header=[0,1])
 twentyseventeen_csv = pd.read_csv()
-
-def yr_cost(datafile: DataSeries.pd):
+# the seventeen and ten pages have different info because it is in the current dollars for 2010 which
+# is 2013 september when it was published and doesn't have the same rows
+def yr_cost_seventeen(datafile: DataSeries.pd) -> pd.Series:
   # first want to be looking at the two yr stuff and it doesn't have like a MultiIndex,
   # so just saying specific rows
   cost = {}
@@ -15,6 +16,8 @@ def yr_cost(datafile: DataSeries.pd):
     cost[col] = two_yr_live_desc[col]
   twoyr_tuit = datafile.loc[16]
   cost["twoyr_tuit"] = twoyr_tuit
+  twoyr_other = cost["mean"] - twoyr_tuit
+  cost["twoyr_other"] = twoyr_other
   # 4 yr time
   fouryr_live_flt = datafile.loc[6:8]
   four_yr_live_desc = fouryr_live_flt.describe()
@@ -22,15 +25,45 @@ def yr_cost(datafile: DataSeries.pd):
     cost[col] = four_yr_live_desc[col]
   fouryr_tuit = datafile.loc[9]
   cost["fouryr_tuit"] = fouryr_tuit
+  fouryr_other = cost["mean"] - fouryr_tuit
+  cost["fouryr_other"] = fouryr_other
   return cost
 
 
-# with later solved average for variable 2
-other_cost_2010_twoyr = ave_cost_2010_twoyr - tuition_cost_2010_twoyr
-other_cost_2010_fouryr = ave_cost_2010_fouryr - tuition_cost_2010_fouryr
+def yr_cost_ten(datafile: DataSeries.pd) -> pd.Series:
+  cost = {}
+  twoyr_live_flt = datafile.loc[25:27]
+  twoyr_tuit_bk = datafile.loc[30:31]
+  twoyr_campus = datafile.loc[34:35]
+  twoyr_off_fam = datafile.loc[37]
+  twoyr_off_nofam = datafile.loc[39:40]
+  two_yr_data = datafile[twoyr_live_flt | twoyr_tuit_bk | twoyr_campus | twoyr_off_fam | twoyr_off_nofam]
+  two_yr_live_desc = twoyr_live_flt.describe()
+  for col in two_yr_live_desc:
+    cost[col] = two_yr_live_desc[col]
+  twoyr_tuit = datafile.loc[30]
+  cost["twoyr_tuit"] = twoyr_tuit
+  twoyr_other = cost["mean"] - twoyr_tuit
+  cost["twoyr_other"] = twoyr_other
+  # 4 yr time
+  fouryr_live_flt = datafile.loc[6:8]
+  fouryr_tuit_bk = datafile.loc[11:12]
+  fouryr_campus = datafile.loc[15:16]
+  fouryr_off_fam = datafile.loc[18]
+  fouryr_off_nofam = datafile.loc[20:21]
+  four_yr_data = datafile[fouryr_live_flt | fouryr_tuit_bk | fouryr_campus | fouryr_off_fam | fouryr_off_nofam]
+  four_yr_describe = four_yr_data.describe()
+  four_yr_live_desc = fouryr_live_flt.describe()
+  for col in four_yr_live_desc:
+    cost[col] = four_yr_live_desc[col]
+  fouryr_tuit = datafile.loc[30]
+  cost["fouryr_tuit"] = fouryr_tuit
+  fouryr_other = cost["mean"] - fouryr_tuit
+  cost["fouryr_other"] = fouryr_other
+  return cost
+
 
 # visualisations
-
 def college_cost_infla(cost: int, yr: int):
   # We can use this for both graphs
   # it will return a dictionary with the years compared costs
@@ -60,8 +93,8 @@ def college_cost_infla(cost: int, yr: int):
 # do it like 2005(in 2010 dollars) - 2010, then seperate group 2010-2017(in 2010 dollars), then do
 # 2005(in 2017 dollars) - 2017 we can do it with different yrs dollars for 2005 because its percentages
 
-ten_cost = yr_cost(twentyten_csv)
-seventeen_cost = yr_cost(twentyseventeen_csv)
+ten_cost = yr_cost_cost(twentyten_csv)
+seventeen_cost = yr_cost_seventeen(twentyseventeen_csv)
 ten_tuit_two = ten_cost[twoyr_tuit]
 seventeen_tuit_two = seventeen_cost[twoyr_tuit]
 ten_tuit_four = ten_cost[fouryr_tuit]
@@ -73,7 +106,6 @@ seventeen_tuit_dict_4 = college_cost_infla(seventeen_tuit_four, 2017)
 dif_05_10_tuit2 = 100 * ((ten_tuit_dict_two[2010] - ten_tuit_dict_two[2005])/ (ten_tuit_dict_two[2005]))
 dif_10_17_tuit2 = 100 * ((ten_tuit_dict_two[2017] - ten_tuit_dict_two[2010])/ (ten_tuit_dict_two[2010]))
 dif_05_17_tuit2 = 100 * ((seventeen_tuit_dict_two[2017] - seventeen_tuit_dict_two[2005])/ (seventeen_tuit_dict_two[2005]))
-
 dif_05_10_tuit4 = 100 * ((ten_tuit_dict_4[2010] - ten_tuit_dict_4[2005])/ ((ten_tuit_dict_4[2005])))
 dif_10_17_tuit4 = 100 * ((ten_tuit_dict_4[2017] - ten_tuit_dict_4[2010])/ ((ten_tuit_dict_4[2010])))
 dif_05_17_tuit4 = 100 * ((seventeen_tuit_dict_4[2017] - seventeen_tuit_dict_4[2005])/ (seventeen_tuit_dict_4[2005]))
@@ -90,7 +122,6 @@ seventeen_other_dict_4 = college_cost_infla(seventeen_other_four, 2017)
 dif_05_10_other2 = 100 * ((ten_other_dict_two[2010] - ten_other_dict_two[2005])/ ((ten_other_dict_two[2005])))
 dif_10_17_other2 = 100 * ((ten_other_dict_two[2017] - ten_other_dict_two[2010])/ ((ten_other_dict_two[2010]))
 dif_05_17_other2 = 100 * ((seventeen_other_dict_two[2017] - seventeen_other_dict_two[2005])/ ((seventeen_other_dict_two[2005])))
-
 dif_05_10_other4 = 100 * ((ten_other_dict_4[2010] - ten_other_dict_4[2005])/ ((ten_other_dict_4[2005]))
 dif_10_17_other4 = 100 * ((ten_other_dict_4[2017] - ten_other_dict_4[2010])/ ((ten_other_dict_4[2010]))
 dif_05_17_other4 = 100 * ((seventeen_other_dict_4[2017] - seventeen_other_dict_4[2005])/ (seventeen_other_dict_4[2005]))
@@ -144,8 +175,8 @@ plt.legend()
 plt.savefig('FourYrPercentDif.png')
 
 # this is for the graph with the costs on average
-ten_cost = yr_cost(twentyten_csv)
-seventeen_cost = yr_cost(twentyseventeen_csv)
+ten_cost = yr_cost_ten(twentyten_csv)
+seventeen_cost = yr_cost_seventeen(twentyseventeen_csv)
 # getting the averages into variables
 ave_cost_ten_two = ten_cost["mean"]
 ave_cost_seventeen_two = seventeen_cost["mean"]
