@@ -163,11 +163,11 @@ four_yr_results = {"2005-2010":{
                   "2005-2017": {
   "Tuit": dif_05_17_tuit4,
   "Other": dif_05_17_other4,
-  "Infla": dif_influ_05_17}},
+  "Infla": dif_influ_05_17},
                   "2010-2017": {
   "Tuit": dif_10_17_tuit4,
   "Other": dif_10_17_other4,
-  "Infla": dif_influ_10_17}}}
+  "Infla": dif_influ_10_17}}
 
 fig, ax = plt.subplots(1, figsize=(20,10))
 four_yr_results.plot(kind="bar")
