@@ -37,7 +37,6 @@ def yr_cost_ten(datafile: pd.Series) -> pd.Series:
   twoyr_campus = datafile.loc[34:35]
   twoyr_off_fam = datafile.loc[37]
   twoyr_off_nofam = datafile.loc[39:40]
-  two_yr_data = datafile[twoyr_live_flt | twoyr_tuit_bk | twoyr_campus | twoyr_off_fam | twoyr_off_nofam]
   two_yr_live_desc = twoyr_live_flt.describe()
   for col in two_yr_live_desc:
     cost[col] = two_yr_live_desc[col]
