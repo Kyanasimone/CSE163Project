@@ -172,10 +172,10 @@ plt.savefig('FourYrPercentDif.png')
 ten_cost = yr_cost_ten(twentyten_csv)
 seventeen_cost = yr_cost_seventeen(twentyseventeen_csv)
 # getting the averages into variables
-ave_cost_ten_two = ten_cost["mean"]
-ave_cost_seventeen_two = seventeen_cost["mean"]
-ave_cost_ten_four = ten_cost["mean"]
-ave_cost_seventeen_four = seventeen_cost["mean"]
+ave_cost_ten_two = ten_cost["mean2"]
+ave_cost_seventeen_two = seventeen_cost["mean2"]
+ave_cost_ten_four = ten_cost["mean4"]
+ave_cost_seventeen_four = seventeen_cost["mean4"]
 # putting it with inflation
 infla_ten_two = college_cost_infla(ave_cost_ten_two, 2010)
 infla_seventeen_two = college_cost_infla(ave_cost_seventeen_two, 2017)
