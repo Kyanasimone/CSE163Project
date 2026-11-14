@@ -15,18 +15,18 @@ def yr_cost_seventeen(datafile: pd.Series) -> pd.Series:
   print(datafile)
   twoyr_live_flt = datafile.loc[11:13, cost_columns]
   two_yr_live_desc = twoyr_live_flt.describe()
-  cost["mean"] = two_yr_live_desc.loc["mean"].mean()
+  cost["mean2"] = two_yr_live_desc.loc["mean"].mean()
   twoyr_tuit = datafile.loc[14, cost_columns].astype(float)
   cost["twoyr_tuit"] = twoyr_tuit.mean()
-  twoyr_other = cost["mean"] - cost["twoyr_tuit"]
+  twoyr_other = cost["mean2"] - cost["twoyr_tuit"]
   cost["twoyr_other"] = twoyr_other
   # 4 yr time
   fouryr_live_flt = datafile.loc[4:6, cost_columns]
   four_yr_live_desc = fouryr_live_flt.describe()
   fouryr_tuit = datafile.loc[7, cost_columns].astype(float)
-  cost["mean"] = four_yr_live_desc.loc["mean"].mean()
+  cost["mean4"] = four_yr_live_desc.loc["mean"].mean()
   cost["fouryr_tuit"] = fouryr_tuit.mean()
-  fouryr_other = cost["mean"] - cost["fouryr_tuit"]
+  fouryr_other = cost["mean4"] - cost["fouryr_tuit"]
   cost["fouryr_other"] = fouryr_other
   return cost
 
@@ -36,18 +36,18 @@ def yr_cost_ten(datafile: pd.Series) -> pd.Series:
   cost_columns = datafile.columns[1:]
   twoyr_live_flt = datafile.loc[22:24, cost_columns]
   two_yr_live_desc = twoyr_live_flt.describe()
-  cost["mean"] = two_yr_live_desc.loc["mean"].mean()
+  cost["mean2"] = two_yr_live_desc.loc["mean"].mean()
   twoyr_tuit = datafile.loc[27, cost_columns].astype(float)
   cost["twoyr_tuit"] = twoyr_tuit.mean()
-  twoyr_other = cost["mean"] - cost["twoyr_tuit"]
+  twoyr_other = cost["mean2"] - cost["twoyr_tuit"]
   cost["twoyr_other"] = twoyr_other
   # 4 yr time
   fouryr_live_flt = datafile.loc[3:5, cost_columns]
   four_yr_live_desc = fouryr_live_flt.describe()
-  cost["mean"] = four_yr_live_desc.loc["mean"].mean()
+  cost["mean4"] = four_yr_live_desc.loc["mean"].mean()
   fouryr_tuit = datafile.loc[8,cost_columns].astype(float)
   cost["fouryr_tuit"] = fouryr_tuit.mean()
-  fouryr_other = cost["mean"] - cost["fouryr_tuit"]
+  fouryr_other = cost["mean4"] - cost["fouryr_tuit"]
   cost["fouryr_other"] = fouryr_other
   return cost
 
