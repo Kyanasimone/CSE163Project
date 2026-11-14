@@ -38,8 +38,7 @@ def yr_cost_ten(datafile: pd.Series) -> pd.Series:
   twoyr_off_fam = datafile.loc[37]
   twoyr_off_nofam = datafile.loc[39:40]
   two_yr_live_desc = twoyr_live_flt.describe()
-  for col in two_yr_live_desc:
-    cost[col] = two_yr_live_desc[col]
+  cost["mean"] = two_yr_live_desc.loc["mean"]
   twoyr_tuit = datafile.loc[30]
   cost["twoyr_tuit"] = twoyr_tuit
   twoyr_other = cost["mean"] - twoyr_tuit
@@ -53,8 +52,7 @@ def yr_cost_ten(datafile: pd.Series) -> pd.Series:
   four_yr_data = datafile[fouryr_live_flt | fouryr_tuit_bk | fouryr_campus | fouryr_off_fam | fouryr_off_nofam]
   four_yr_describe = four_yr_data.describe()
   four_yr_live_desc = fouryr_live_flt.describe()
-  for col in four_yr_live_desc:
-    cost[col] = four_yr_live_desc[col]
+  cost["mean"] = four_yr_live_desc.loc["mean"]
   fouryr_tuit = datafile.loc[30]
   cost["fouryr_tuit"] = fouryr_tuit
   fouryr_other = cost["mean"] - fouryr_tuit
