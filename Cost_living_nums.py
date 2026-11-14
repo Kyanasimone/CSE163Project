@@ -145,18 +145,18 @@ plt.title("2-Year Instituition Costs Percent Difference")
 plt.legend()
 plt.savefig('TwoYrPercentDif.png')
 
-four_yr_results = {"Tuition": {
-        "2005-2010": dif_05_10_tuit4,
-        "2005-2017": dif_05_17_tuit4,
-        "2010-2017": dif_10_17_tuit4},
-    "Other": {
-        "2005-2010": dif_05_10_other4,
-        "2005-2017": dif_05_17_other4,
-        "2010-2017": dif_10_17_other4},
-    "Inflation": {
-        "2005-2010": dif_influ_05_10,
-        "2005-2017": dif_influ_05_17,
-        "2010-2017": dif_influ_10_17}}
+ {"2005-2010":{
+  "Tuit": dif_05_10_tuit4,
+  "Other": dif_05_10_other4,
+  "Infla": dif_influ_05_10},
+                  "2005-2017": {
+  "Tuit": dif_05_17_tuit4,
+  "Other": dif_05_17_other4,
+  "Infla": dif_influ_05_17},
+                  "2010-2017": {
+  "Tuit": dif_10_17_tuit4,
+  "Other": dif_10_17_other4,
+  "Infla": dif_influ_10_17}}
 
 fig, ax = plt.subplots(1, figsize=(20,10))
 four_yr_results.plot(kind="bar")
