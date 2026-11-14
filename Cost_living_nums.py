@@ -6,7 +6,7 @@ twentyten_csv = pd.read_csv("yrs2010-11.csv", header=[0,1])
 twentyseventeen_csv = pd.read_csv("yrs_cost_2017-18", header=[0,1])
 # the seventeen and ten pages have different info because it is in the current dollars for 2010 which
 # is 2013 september when it was published and doesn't have the same rows
-def yr_cost_seventeen(datafile: DataSeries.pd) -> pd.Series:
+def yr_cost_seventeen(datafile: pd.Series) -> pd.Series:
   # first want to be looking at the two yr stuff and it doesn't have like a MultiIndex,
   # so just saying specific rows
   cost = {}
