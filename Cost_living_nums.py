@@ -7,55 +7,47 @@ twentyseventeen_csv = pd.read_csv("yrs_cost_2017-18", header=[0,1])
 # the seventeen and ten pages have different info because it is in the current dollars for 2010 which
 # is 2013 september when it was published and doesn't have the same rows
 def yr_cost_seventeen(datafile: pd.Series) -> pd.Series:
-  # first want to be looking at the two yr stuff and it doesn't have like a MultiIndex,
+  # first want to be looking at the two yr stuff and
+    # it doesn't have like a MultiIndex,
   # so just saying specific rows
   cost = {}
-  twoyr_live_flt = datafile.loc[13:15]
+  cost_columns = datafile.columns[1:]
+  print(datafile)
+  twoyr_live_flt = datafile.loc[11:13, cost_columns]
   two_yr_live_desc = twoyr_live_flt.describe()
-  for col in two_yr_live_desc:
-    cost[col] = two_yr_live_desc[col]
-  twoyr_tuit = datafile.loc[16]
-  cost["twoyr_tuit"] = twoyr_tuit
-  twoyr_other = cost["mean"] - twoyr_tuit
+  cost["mean"] = two_yr_live_desc.loc["mean"].mean()
+  twoyr_tuit = datafile.loc[14, cost_columns].astype(float)
+  cost["twoyr_tuit"] = twoyr_tuit.mean()
+  twoyr_other = cost["mean"] - cost["twoyr_tuit"]
   cost["twoyr_other"] = twoyr_other
   # 4 yr time
-  fouryr_live_flt = datafile.loc[6:8]
+  fouryr_live_flt = datafile.loc[4:6, cost_columns]
   four_yr_live_desc = fouryr_live_flt.describe()
-  for col in four_yr_live_desc:
-    cost[col] = four_yr_live_desc[col]
-  fouryr_tuit = datafile.loc[9]
-  cost["fouryr_tuit"] = fouryr_tuit
-  fouryr_other = cost["mean"] - fouryr_tuit
+  fouryr_tuit = datafile.loc[7, cost_columns].astype(float)
+  cost["mean"] = four_yr_live_desc.loc["mean"].mean()
+  cost["fouryr_tuit"] = fouryr_tuit.mean()
+  fouryr_other = cost["mean"] - cost["fouryr_tuit"]
   cost["fouryr_other"] = fouryr_other
   return cost
 
 
 def yr_cost_ten(datafile: pd.Series) -> pd.Series:
   cost = {}
-  twoyr_live_flt = datafile.loc[25:27]
-  twoyr_tuit_bk = datafile.loc[30:31]
-  twoyr_campus = datafile.loc[34:35]
-  twoyr_off_fam = datafile.loc[37]
-  twoyr_off_nofam = datafile.loc[39:40]
+  cost_columns = datafile.columns[1:]
+  twoyr_live_flt = datafile.loc[22:24, cost_columns]
   two_yr_live_desc = twoyr_live_flt.describe()
-  cost["mean"] = two_yr_live_desc.loc["mean"]
-  twoyr_tuit = datafile.loc[30]
-  cost["twoyr_tuit"] = twoyr_tuit
-  twoyr_other = cost["mean"] - twoyr_tuit
+  cost["mean"] = two_yr_live_desc.loc["mean"].mean()
+  twoyr_tuit = datafile.loc[27, cost_columns].astype(float)
+  cost["twoyr_tuit"] = twoyr_tuit.mean()
+  twoyr_other = cost["mean"] - cost["twoyr_tuit"]
   cost["twoyr_other"] = twoyr_other
   # 4 yr time
-  fouryr_live_flt = datafile.loc[6:8]
-  fouryr_tuit_bk = datafile.loc[11:12]
-  fouryr_campus = datafile.loc[15:16]
-  fouryr_off_fam = datafile.loc[18]
-  fouryr_off_nofam = datafile.loc[20:21]
-  four_yr_data = datafile[fouryr_live_flt | fouryr_tuit_bk | fouryr_campus | fouryr_off_fam | fouryr_off_nofam]
-  four_yr_describe = four_yr_data.describe()
+  fouryr_live_flt = datafile.loc[3:5, cost_columns]
   four_yr_live_desc = fouryr_live_flt.describe()
-  cost["mean"] = four_yr_live_desc.loc["mean"]
-  fouryr_tuit = datafile.loc[30]
-  cost["fouryr_tuit"] = fouryr_tuit
-  fouryr_other = cost["mean"] - fouryr_tuit
+  cost["mean"] = four_yr_live_desc.loc["mean"].mean()
+  fouryr_tuit = datafile.loc[8,cost_columns].astype(float)
+  cost["fouryr_tuit"] = fouryr_tuit.mean()
+  fouryr_other = cost["mean"] - cost["fouryr_tuit"]
   cost["fouryr_other"] = fouryr_other
   return cost
 
