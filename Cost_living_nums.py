@@ -65,7 +65,7 @@ def college_cost_infla(cost: int, yr: int):
     # The price increase was -16.16% also know as price decrease
     # from 2013 to 2005
     cost2005 = cost * 0.8384
-    yr_infla[2005] = int(cost_2005)
+    yr_infla[2005] = int(cost2005)
     # from 2013 to 2010 it was a decrease of 6.40%
     yr_infla[2010] = cost * 0.936
   if yr == 2017:
