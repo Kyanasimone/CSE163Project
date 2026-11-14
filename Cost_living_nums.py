@@ -30,7 +30,7 @@ def yr_cost_seventeen(datafile: DataSeries.pd) -> pd.Series:
   return cost
 
 
-def yr_cost_ten(datafile: DataSeries.pd) -> pd.Series:
+def yr_cost_ten(datafile: Series.pd) -> pd.Series:
   cost = {}
   twoyr_live_flt = datafile.loc[25:27]
   twoyr_tuit_bk = datafile.loc[30:31]
