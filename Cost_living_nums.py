@@ -87,10 +87,10 @@ def college_cost_infla(cost: int, yr: int):
 
 ten_cost = yr_cost_ten(twentyten_csv)
 seventeen_cost = yr_cost_seventeen(twentyseventeen_csv)
-ten_tuit_two = ten_cost[twoyr_tuit]
-seventeen_tuit_two = seventeen_cost[twoyr_tuit]
-ten_tuit_four = ten_cost[fouryr_tuit]
-seventeen_tuit_four = seventeen_cost[fouryr_tuit]
+ten_tuit_two = ten_cost["twoyr_tuit"]
+seventeen_tuit_two = seventeen_cost["twoyr_tuit"]
+ten_tuit_four = ten_cost["fouryr_tuit"]
+seventeen_tuit_four = seventeen_cost["fouryr_tuit"]
 ten_tuit_dict_two = college_cost_infla(ten_tuit_two, 2010)
 seventeen_tuit_dict_two = college_cost_infla(seventeen_tuit_two, 2017)
 ten_tuit_dict_4 = college_cost_infla(ten_tuit_four, 2010)
@@ -103,10 +103,10 @@ dif_10_17_tuit4 = 100 * ((ten_tuit_dict_4[2017] - ten_tuit_dict_4[2010])/ ((ten_
 dif_05_17_tuit4 = 100 * ((seventeen_tuit_dict_4[2017] - seventeen_tuit_dict_4[2005])/ (seventeen_tuit_dict_4[2005]))
 
 # for other
-ten_other_two = ten_cost[twoyr_other]
-seventeen_other_two = seventeen_cost[twoyr_other]
-ten_other_four = ten_cost[fouryr_other]
-seventeen_other_four = seventeen_cost[fouryr_other]
+ten_other_two = ten_cost["twoyr_other"]
+seventeen_other_two = seventeen_cost["twoyr_other"]
+ten_other_four = ten_cost["fouryr_other"]
+seventeen_other_four = seventeen_cost["fouryr_other"]
 ten_other_dict_two = college_cost_infla(ten_other_two, 2010)
 seventeen_other_dict_two = college_cost_infla(seventeen_other_two, 2017)
 ten_other_dict_4 = college_cost_infla(ten_other_four, 2010)
