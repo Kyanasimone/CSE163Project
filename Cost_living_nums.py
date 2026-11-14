@@ -145,7 +145,7 @@ plt.title("2-Year Instituition Costs Percent Difference")
 plt.legend()
 plt.savefig('TwoYrPercentDif.png')
 
- {"2005-2010":{
+ four_yr_results = {"2005-2010":{
   "Tuit": dif_05_10_tuit4,
   "Other": dif_05_10_other4,
   "Infla": dif_influ_05_10},
