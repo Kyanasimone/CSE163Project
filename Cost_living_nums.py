@@ -96,7 +96,7 @@ def college_cost_infla(cost: int, yr: int):
 # do it like 2005(in 2010 dollars) - 2010, then seperate group 2010-2017(in 2010 dollars), then do
 # 2005(in 2017 dollars) - 2017 we can do it with different yrs dollars for 2005 because its percentages
 
-ten_cost = yr_cost_cost(twentyten_csv)
+ten_cost = yr_cost_ten(twentyten_csv)
 seventeen_cost = yr_cost_seventeen(twentyseventeen_csv)
 ten_tuit_two = ten_cost[twoyr_tuit]
 seventeen_tuit_two = seventeen_cost[twoyr_tuit]
