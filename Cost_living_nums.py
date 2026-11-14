@@ -137,10 +137,11 @@ two_yr_results = {"2005-2010":{
   "Other": dif_10_17_other2,
   "Infla": dif_influ_10_17}}
 
-fig, ax = plt.subplots(1, figsize=(20,10))
-two_yr_results.plot(kind="bar")
+fig, ax = plt.subplots(1, figsize=(10,5))
+pd.DataFrame(two_yr_results).plot(kind="bar", ax=ax)
 plt.xlabel("Time Period")
 plt.ylabel("Percent Different")
+plt.ylim(7.5, 27)
 plt.title("2-Year Instituition Costs Percent Difference")
 plt.legend()
 plt.savefig('TwoYrPercentDif.png')
@@ -158,10 +159,11 @@ plt.savefig('TwoYrPercentDif.png')
   "Other": dif_10_17_other4,
   "Infla": dif_influ_10_17}}
 
-fig, ax = plt.subplots(1, figsize=(20,10))
-four_yr_results.plot(kind="bar")
+fig, ax = plt.subplots(1, figsize=(10, 5))
+pd.DataFrame(four_yr_results).plot(kind="bar", ax=ax)
 plt.xlabel("Time Period")
 plt.ylabel("Percent Different")
+plt.ylim(7.5, 27)
 plt.title("4-Year Instituition Costs Percent Difference")
 plt.legend()
 plt.savefig('FourYrPercentDif.png')
