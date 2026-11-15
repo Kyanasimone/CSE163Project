@@ -12,7 +12,6 @@ def yr_cost_seventeen(datafile: pd.Series) -> pd.Series:
   # so just saying specific rows
   cost = {}
   cost_columns = datafile.columns[1:]
-  print(datafile)
   twoyr_live_flt = datafile.loc[11:13, cost_columns]
   two_yr_live_desc = twoyr_live_flt.describe()
   cost["mean2"] = two_yr_live_desc.loc["mean"].mean()
