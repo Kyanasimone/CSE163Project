@@ -188,7 +188,7 @@ dic_ave_seventeen_two = {2005 : infla_seventeen_two[2005], 2010: infla_seventeen
 dic_ave_ten_four = {2005 : infla_ten_four[2005], 2010: infla_ten_four[2010], 2017: infla_ten_four[2017]}
 dic_ave_seventeen_four = {2005 : infla_seventeen_four[2005], 2010: infla_seventeen_four[2010], 2017: infla_seventeen_four[2017]}
 
-fig, ax = plt.subplots(1, figsize=(20,10))
+fig, ax = plt.subplots(1, figsize=(10,5))
 # then this is for all the axes
 ave_ten_two_x = list(dic_ave_ten_two.keys())
 ave_ten_two_y = list(dic_ave_ten_two.values())
@@ -198,12 +198,24 @@ ave_ten_four_x = list(dic_ave_ten_four.keys())
 ave_ten_four_y = list(dic_ave_ten_four.values())
 ave_seventeen_four_x = list(dic_ave_seventeen_four.keys())
 ave_seventeen_four_y = list(dic_ave_seventeen_four.values())
-               
-dic_ave_ten_two.plot(x=ave_ten_two_x, y=ave_ten_two_y, ax=ax)
-dic_ave_seventeen_two.plot(x=ave_seventeen_two_x, y=ave_seventeen_two_y, ax=ax)
-dic_ave_ten_four.plot(x=ave_ten_four_x, y=ave_ten_four_y, ax=ax)
-dic_ave_seventeen_four.plot(x=ave_seventeen_four_x, y=ave_seventeen_four_y, ax=ax)
+years = [2005, 2010, 2017]
+
+ax.plot(ave_ten_two_x, ave_ten_two_y, marker="o", markersize=8,
+        label="2-Year 2010")
+ax.plot(ave_seventeen_two_x, ave_seventeen_two_y, marker="o",
+        markersize=8,label="2-Year 2017")
+ax.plot(ave_ten_four_x, ave_ten_four_y, marker="o", markersize=8,
+        label="4-Year 2010")
+ax.plot(ave_seventeen_four_x, ave_seventeen_four_y, marker="o",
+        markersize=8, label="4-Year 2017")
+
+ax.plot(years, two_year_costs, marker="o", markersize=8,
+        label="2-Year")
+ax.plot(years, four_year_costs, marker="o",
+        markersize=8,label="4-Year")
+
 plt.xlabel("Year")
+ax.set_xticks([2005, 2010, 2017])
 plt.ylabel("Cost")
 plt.title("Inflation of Each Years Cost")
 plt.legend()
