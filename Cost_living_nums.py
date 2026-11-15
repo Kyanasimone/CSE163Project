@@ -209,11 +209,6 @@ ax.plot(ave_ten_four_x, ave_ten_four_y, marker="o", markersize=8,
 ax.plot(ave_seventeen_four_x, ave_seventeen_four_y, marker="o",
         markersize=8, label="4-Year 2017")
 
-ax.plot(years, two_year_costs, marker="o", markersize=8,
-        label="2-Year")
-ax.plot(years, four_year_costs, marker="o",
-        markersize=8,label="4-Year")
-
 plt.xlabel("Year")
 ax.set_xticks([2005, 2010, 2017])
 plt.ylabel("Cost")
