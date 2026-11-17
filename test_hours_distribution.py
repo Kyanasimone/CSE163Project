@@ -1,5 +1,5 @@
 """
-CSE 163: Unit tests for RQ3 data processing and cleaning functions.
+CSE 163 Final Project: Unit tests for RQ3 data processing and cleaning functions.
 """
 
 import pandas as pd
