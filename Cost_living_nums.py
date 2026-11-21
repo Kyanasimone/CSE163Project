@@ -12,21 +12,37 @@ def yr_cost_seventeen(datafile: pd.Series) -> pd.Series:
   # so just saying specific rows
   cost = {}
   cost_columns = datafile.columns[1:]
-  twoyr_live_flt = datafile.loc[11:13, cost_columns]
+  twoyr_live_flt = datafile.loc[14:16, cost_columns]
+  two_yr_live_desc = twoyr_live_flt.describe()
+  cost["mean2"] = two_yr_live_desc.loc["mean"].mean()
+  twoyr_tuit = datafile.loc[17, cost_columns].astype(float)
+  cost["twoyr_tuit"] = twoyr_tuit.mean()
+  twoyr_other = cost["mean2"] - cost["twoyr_tuit"]
+  cost["twoyr_other"] = twoyr_other
+  # error in columns called but going to leave these for now in case of issue
+  """twoyr_live_flt = datafile.loc[11:13, cost_columns]
   two_yr_live_desc = twoyr_live_flt.describe()
   cost["mean2"] = two_yr_live_desc.loc["mean"].mean()
   twoyr_tuit = datafile.loc[14, cost_columns].astype(float)
   cost["twoyr_tuit"] = twoyr_tuit.mean()
   twoyr_other = cost["mean2"] - cost["twoyr_tuit"]
-  cost["twoyr_other"] = twoyr_other
+  cost["twoyr_other"] = twoyr_other"""
   # 4 yr time
-  fouryr_live_flt = datafile.loc[4:6, cost_columns]
+  fouryr_live_flt = datafile.loc[7:9, cost_columns]
+  four_yr_live_desc = fouryr_live_flt.describe()
+  fouryr_tuit = datafile.loc[10, cost_columns].astype(float)
+  cost["mean4"] = four_yr_live_desc.loc["mean"].mean()
+  cost["fouryr_tuit"] = fouryr_tuit.mean()
+  fouryr_other = cost["mean4"] - cost["fouryr_tuit"]
+  cost["fouryr_other"] = fouryr_other
+  # error in columns but leaving just in case
+  """fouryr_live_flt = datafile.loc[4:6, cost_columns]
   four_yr_live_desc = fouryr_live_flt.describe()
   fouryr_tuit = datafile.loc[7, cost_columns].astype(float)
   cost["mean4"] = four_yr_live_desc.loc["mean"].mean()
   cost["fouryr_tuit"] = fouryr_tuit.mean()
   fouryr_other = cost["mean4"] - cost["fouryr_tuit"]
-  cost["fouryr_other"] = fouryr_other
+  cost["fouryr_other"] = fouryr_other"""
   return cost
 
 
