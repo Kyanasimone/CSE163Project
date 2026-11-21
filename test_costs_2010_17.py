@@ -29,8 +29,11 @@ def test_manual_2017():
 
 def test_yr_cost_2017():
     csv_2017 = pd.read_csv("yrs_cost_2017-18", header=[0,1])
-
-    yr_cost_seventeen(csv_2017)
+    cost_dict = yr_cost_seventeen(csv_2017)
+    assert cost_dict["twoyr_tuit"] == 9948.5
+    assert cost_dict["mean2"] == 20935.5833333333
+    assert cost_dict["fouryr_tuit"] == 19681.5
+    assert cost_dict["twoyr_other"] == 10987.0833333333
 
 
 def main():
