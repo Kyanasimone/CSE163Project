@@ -4,7 +4,14 @@ import matplotlib.pyplot as plt
 
 twentyten_csv = pd.read_csv("yrs2010-11.csv", header=[0,1])
 twentyseventeen_csv = pd.read_csv("yrs_cost_2017-18", header=[0,1])
-# the seventeen and ten pages have different info because it is in the current dollars for 2010 which
+twentyseventeen_csv = pd.read_csv("yrs2017-18.csv", header=[0, 1])
+numeric_data = twentyseventeen_csv.iloc[:, 1:].apply(
+    pd.to_numeric, errors="coerce")
+twentyseventeen_csv = pd.concat(
+    [twentyseventeen_csv.iloc[:, :1], numeric_data],
+    axis=1)
+# the seventeen and ten pages have different info because it is in
+# the current dollars for 2010 which
 # is 2013 september when it was published and doesn't have the same rows
 def yr_cost_seventeen(datafile: pd.Series) -> pd.Series:
   # first want to be looking at the two yr stuff and
@@ -12,74 +19,42 @@ def yr_cost_seventeen(datafile: pd.Series) -> pd.Series:
   # so just saying specific rows
   cost = {}
   cost_columns = datafile.columns[1:]
-  twoyr_live_flt = datafile.loc[14:16, cost_columns]
+  twoyr_live_flt = datafile.iloc[11:14, 1:].astype(float)
   two_yr_live_desc = twoyr_live_flt.describe()
-  cost["mean2"] = two_yr_live_desc.loc["mean"].mean()
-  twoyr_tuit = datafile.loc[17, cost_columns].astype(float)
+  cost["mean2"] = twoyr_live_flt.mean().mean()
+  twoyr_tuit = datafile.iloc[14, 1:].astype(float)
   cost["twoyr_tuit"] = twoyr_tuit.mean()
   twoyr_other = cost["mean2"] - cost["twoyr_tuit"]
   cost["twoyr_other"] = twoyr_other
-  # error in columns called but going to leave these for now in case of issue
-  """twoyr_live_flt = datafile.loc[11:13, cost_columns]
-  two_yr_live_desc = twoyr_live_flt.describe()
-  cost["mean2"] = two_yr_live_desc.loc["mean"].mean()
-  twoyr_tuit = datafile.loc[14, cost_columns].astype(float)
-  cost["twoyr_tuit"] = twoyr_tuit.mean()
-  twoyr_other = cost["mean2"] - cost["twoyr_tuit"]
-  cost["twoyr_other"] = twoyr_other"""
   # 4 yr time
-  fouryr_live_flt = datafile.loc[7:9, cost_columns]
+  fouryr_live_flt = datafile.iloc[4:7, 1:].astype(float)
   four_yr_live_desc = fouryr_live_flt.describe()
-  fouryr_tuit = datafile.loc[10, cost_columns].astype(float)
-  cost["mean4"] = four_yr_live_desc.loc["mean"].mean()
+  fouryr_tuit = datafile.iloc[7, 1:].astype(float)
+  cost["mean4"] = fouryr_live_flt.mean().mean()
   cost["fouryr_tuit"] = fouryr_tuit.mean()
   fouryr_other = cost["mean4"] - cost["fouryr_tuit"]
   cost["fouryr_other"] = fouryr_other
-  # error in columns but leaving just in case
-  """fouryr_live_flt = datafile.loc[4:6, cost_columns]
-  four_yr_live_desc = fouryr_live_flt.describe()
-  fouryr_tuit = datafile.loc[7, cost_columns].astype(float)
-  cost["mean4"] = four_yr_live_desc.loc["mean"].mean()
-  cost["fouryr_tuit"] = fouryr_tuit.mean()
-  fouryr_other = cost["mean4"] - cost["fouryr_tuit"]
-  cost["fouryr_other"] = fouryr_other"""
   return cost
 
 
 def yr_cost_ten(datafile: pd.Series) -> pd.Series:
   cost = {}
   cost_columns = datafile.columns[1:]
-  twoyr_live_flt = datafile.loc[25:27, cost_columns]
-  two_yr_live_desc = twoyr_live_flt.describe()
-  cost["mean2"] = two_yr_live_desc.loc["mean"].mean()
-  twoyr_tuit = datafile.loc[30, cost_columns].astype(float)
-  cost["twoyr_tuit"] = twoyr_tuit.mean()
-  twoyr_other = cost["mean2"] - cost["twoyr_tuit"]
-  cost["twoyr_other"] = twoyr_other
-  # error in columns called but going to leave these for now in case of issue
-  """twoyr_live_flt = datafile.loc[22:24, cost_columns]
+  twoyr_live_flt = datafile.loc[22:24, cost_columns]
   two_yr_live_desc = twoyr_live_flt.describe()
   cost["mean2"] = two_yr_live_desc.loc["mean"].mean()
   twoyr_tuit = datafile.loc[27, cost_columns].astype(float)
   cost["twoyr_tuit"] = twoyr_tuit.mean()
   twoyr_other = cost["mean2"] - cost["twoyr_tuit"]
-  cost["twoyr_other"] = twoyr_other"""
+  cost["twoyr_other"] = twoyr_other
   # 4 yr time
-  fouryr_live_flt = datafile.loc[6:8, cost_columns]
-  four_yr_live_desc = fouryr_live_flt.describe()
-  cost["mean4"] = four_yr_live_desc.loc["mean"].mean()
-  fouryr_tuit = datafile.loc[11, cost_columns].astype(float)
-  cost["fouryr_tuit"] = fouryr_tuit.mean()
-  fouryr_other = cost["mean4"] - cost["fouryr_tuit"]
-  cost["fouryr_other"] = fouryr_other
-  # error in columns called but going to leave these for now in case of issue
-  """ fouryr_live_flt = datafile.loc[3:5, cost_columns]
+  fouryr_live_flt = datafile.loc[3:5, cost_columns]
   four_yr_live_desc = fouryr_live_flt.describe()
   cost["mean4"] = four_yr_live_desc.loc["mean"].mean()
   fouryr_tuit = datafile.loc[8, cost_columns].astype(float)
   cost["fouryr_tuit"] = fouryr_tuit.mean()
   fouryr_other = cost["mean4"] - cost["fouryr_tuit"]
-  cost["fouryr_other"] = fouryr_other"""
+  cost["fouryr_other"] = fouryr_other
   return cost
 
 
@@ -110,139 +85,146 @@ def college_cost_infla(cost: int, yr: int):
   return yr_infla
 
 
-# first do it so its yr_cost for both yrs
-# then do it so its college inflation do it for average tuition, and average other for both yrs
-# and now you will do the average tuition of each year and it says to do percent dif for three variables
-# do it like 2005(in 2010 dollars) - 2010, then seperate group 2010-2017(in 2010 dollars), then do
-# 2005(in 2017 dollars) - 2017 we can do it with different yrs dollars for 2005 because its percentages
+def main():
+    twentyten_csv = pd.read_csv("yrs2010-11.csv", header=[0,1])
+    twentyseventeen_csv = pd.read_csv("yrs2017-18.csv", header=[0,1])
+    ten_cost = yr_cost_ten(twentyten_csv)
+    seventeen_cost = yr_cost_seventeen(twentyseventeen_csv)
+    ten_tuit_two = ten_cost["twoyr_tuit"]
+    seventeen_tuit_two = seventeen_cost["twoyr_tuit"]
+    ten_tuit_four = ten_cost["fouryr_tuit"]
+    seventeen_tuit_four = seventeen_cost["fouryr_tuit"]
+    ten_tuit_dict_two = college_cost_infla(ten_tuit_two, 2010)
+    seventeen_tuit_dict_two = college_cost_infla(seventeen_tuit_two, 2017)
+    ten_tuit_dict_4 = college_cost_infla(ten_tuit_four, 2010)
+    seventeen_tuit_dict_4 = college_cost_infla(seventeen_tuit_four, 2017)
+    dif_05_10_tuit2 = 100 * ((ten_tuit_dict_two[2010] - ten_tuit_dict_two[2005])/ (ten_tuit_dict_two[2005]))
+    dif_10_17_tuit2 = 100 * ((ten_tuit_dict_two[2017] - ten_tuit_dict_two[2010])/ (ten_tuit_dict_two[2010]))
+    dif_05_17_tuit2 = 100 * ((seventeen_tuit_dict_two[2017] - seventeen_tuit_dict_two[2005])/ (seventeen_tuit_dict_two[2005]))
+    dif_05_10_tuit4 = 100 * ((ten_tuit_dict_4[2010] - ten_tuit_dict_4[2005])/ ((ten_tuit_dict_4[2005])))
+    dif_10_17_tuit4 = 100 * ((ten_tuit_dict_4[2017] - ten_tuit_dict_4[2010])/ ((ten_tuit_dict_4[2010])))
+    dif_05_17_tuit4 = 100 * ((seventeen_tuit_dict_4[2017] - seventeen_tuit_dict_4[2005])/ (seventeen_tuit_dict_4[2005]))
 
-ten_cost = yr_cost_ten(twentyten_csv)
-seventeen_cost = yr_cost_seventeen(twentyseventeen_csv)
-ten_tuit_two = ten_cost["twoyr_tuit"]
-seventeen_tuit_two = seventeen_cost["twoyr_tuit"]
-ten_tuit_four = ten_cost["fouryr_tuit"]
-seventeen_tuit_four = seventeen_cost["fouryr_tuit"]
-ten_tuit_dict_two = college_cost_infla(ten_tuit_two, 2010)
-seventeen_tuit_dict_two = college_cost_infla(seventeen_tuit_two, 2017)
-ten_tuit_dict_4 = college_cost_infla(ten_tuit_four, 2010)
-seventeen_tuit_dict_4 = college_cost_infla(seventeen_tuit_four, 2017)
-dif_05_10_tuit2 = 100 * ((ten_tuit_dict_two[2010] - ten_tuit_dict_two[2005])/ (ten_tuit_dict_two[2005]))
-dif_10_17_tuit2 = 100 * ((ten_tuit_dict_two[2017] - ten_tuit_dict_two[2010])/ (ten_tuit_dict_two[2010]))
-dif_05_17_tuit2 = 100 * ((seventeen_tuit_dict_two[2017] - seventeen_tuit_dict_two[2005])/ (seventeen_tuit_dict_two[2005]))
-dif_05_10_tuit4 = 100 * ((ten_tuit_dict_4[2010] - ten_tuit_dict_4[2005])/ ((ten_tuit_dict_4[2005])))
-dif_10_17_tuit4 = 100 * ((ten_tuit_dict_4[2017] - ten_tuit_dict_4[2010])/ ((ten_tuit_dict_4[2010])))
-dif_05_17_tuit4 = 100 * ((seventeen_tuit_dict_4[2017] - seventeen_tuit_dict_4[2005])/ (seventeen_tuit_dict_4[2005]))
+    # for other
+    ten_other_two = ten_cost["twoyr_other"]
+    seventeen_other_two = seventeen_cost["twoyr_other"]
+    ten_other_four = ten_cost["fouryr_other"]
+    seventeen_other_four = seventeen_cost["fouryr_other"]
+    ten_other_dict_two = college_cost_infla(ten_other_two, 2010)
+    seventeen_other_dict_two = college_cost_infla(seventeen_other_two, 2017)
+    ten_other_dict_4 = college_cost_infla(ten_other_four, 2010)
+    seventeen_other_dict_4 = college_cost_infla(seventeen_other_four, 2017)
+    dif_05_10_other2 = 100 * ((ten_other_dict_two[2010] - ten_other_dict_two[2005])/ ((ten_other_dict_two[2005])))
+    dif_10_17_other2 = 100 * ((ten_other_dict_two[2017] - ten_other_dict_two[2010])/ (ten_other_dict_two[2010]))
+    dif_05_17_other2 = 100 * ((seventeen_other_dict_two[2017] - seventeen_other_dict_two[2005])/ (seventeen_other_dict_two[2005]))
+    dif_05_10_other4 = 100 * ((ten_other_dict_4[2010] - ten_other_dict_4[2005])/ (ten_other_dict_4[2005]))
+    dif_10_17_other4 = 100 * ((ten_other_dict_4[2017] - ten_other_dict_4[2010])/ (ten_other_dict_4[2010]))
+    dif_05_17_other4 = 100 * ((seventeen_other_dict_4[2017] - seventeen_other_dict_4[2005])/ (seventeen_other_dict_4[2005]))
 
-# for other
-ten_other_two = ten_cost["twoyr_other"]
-seventeen_other_two = seventeen_cost["twoyr_other"]
-ten_other_four = ten_cost["fouryr_other"]
-seventeen_other_four = seventeen_cost["fouryr_other"]
-ten_other_dict_two = college_cost_infla(ten_other_two, 2010)
-seventeen_other_dict_two = college_cost_infla(seventeen_other_two, 2017)
-ten_other_dict_4 = college_cost_infla(ten_other_four, 2010)
-seventeen_other_dict_4 = college_cost_infla(seventeen_other_four, 2017)
-dif_05_10_other2 = 100 * ((ten_other_dict_two[2010] - ten_other_dict_two[2005])/ ((ten_other_dict_two[2005])))
-dif_10_17_other2 = 100 * ((ten_other_dict_two[2017] - ten_other_dict_two[2010])/ (ten_other_dict_two[2010]))
-dif_05_17_other2 = 100 * ((seventeen_other_dict_two[2017] - seventeen_other_dict_two[2005])/ (seventeen_other_dict_two[2005]))
-dif_05_10_other4 = 100 * ((ten_other_dict_4[2010] - ten_other_dict_4[2005])/ (ten_other_dict_4[2005]))
-dif_10_17_other4 = 100 * ((ten_other_dict_4[2017] - ten_other_dict_4[2010])/ (ten_other_dict_4[2010]))
-dif_05_17_other4 = 100 * ((seventeen_other_dict_4[2017] - seventeen_other_dict_4[2005])/ (seventeen_other_dict_4[2005]))
+    # we will also be having a third bar for each two year chunk for the inflation amounts 
+    dif_influ_05_10 = 10.44
+    dif_influ_10_17 = 12.41
+    dif_influ_05_17 = 20.32
 
-# we will also be having a third bar for each two year chunk for the inflation amounts 
-dif_influ_05_10 = 10.44
-dif_influ_10_17 = 12.41
-dif_influ_05_17 = 20.32
+    # then going to make a big dictionary for two year results
+    two_yr_results = {"2005-2010":{
+      "Tuit": dif_05_10_tuit2,
+      "Other": dif_05_10_other2,
+      "Infla": dif_influ_05_10},
+                      "2005-2017": {
+      "Tuit": dif_05_17_tuit2,
+      "Other": dif_05_17_other2,
+      "Infla": dif_influ_05_17},
+                      "2010-2017": {
+      "Tuit": dif_10_17_tuit2,
+      "Other": dif_10_17_other2,
+      "Infla": dif_influ_10_17}}
 
-# then going to make a big dictionary for two year results
-two_yr_results = {"2005-2010":{
-  "Tuit": dif_05_10_tuit2,
-  "Other": dif_05_10_other2,
-  "Infla": dif_influ_05_10},
-                  "2005-2017": {
-  "Tuit": dif_05_17_tuit2,
-  "Other": dif_05_17_other2,
-  "Infla": dif_influ_05_17},
-                  "2010-2017": {
-  "Tuit": dif_10_17_tuit2,
-  "Other": dif_10_17_other2,
-  "Infla": dif_influ_10_17}}
+    fig, ax = plt.subplots(1, figsize=(10,5))
+    pd.DataFrame(two_yr_results).plot(kind="bar", ax=ax)
+    plt.xlabel("Time Period")
+    plt.ylabel("Percent Different")
+    plt.ylim(7.5, 27)
+    plt.title("2-Year Instituition Costs Percent Difference")
+    plt.legend()
+    plt.savefig('TwoYrPercentDif.png')
 
-fig, ax = plt.subplots(1, figsize=(10,5))
-pd.DataFrame(two_yr_results).plot(kind="bar", ax=ax)
-plt.xlabel("Time Period")
-plt.ylabel("Percent Different")
-plt.ylim(7.5, 27)
-plt.title("2-Year Instituition Costs Percent Difference")
-plt.legend()
-plt.savefig('TwoYrPercentDif.png')
+    four_yr_results =  {"2005-2010":{
+      "Tuit": dif_05_10_tuit4,
+      "Other": dif_05_10_other4,
+      "Infla": dif_influ_05_10},
+                      "2005-2017": {
+      "Tuit": dif_05_17_tuit4,
+      "Other": dif_05_17_other4,
+      "Infla": dif_influ_05_17},
+                      "2010-2017": {
+      "Tuit": dif_10_17_tuit4,
+      "Other": dif_10_17_other4,
+      "Infla": dif_influ_10_17}}
 
- four_yr_results = {"2005-2010":{
-  "Tuit": dif_05_10_tuit4,
-  "Other": dif_05_10_other4,
-  "Infla": dif_influ_05_10},
-                  "2005-2017": {
-  "Tuit": dif_05_17_tuit4,
-  "Other": dif_05_17_other4,
-  "Infla": dif_influ_05_17},
-                  "2010-2017": {
-  "Tuit": dif_10_17_tuit4,
-  "Other": dif_10_17_other4,
-  "Infla": dif_influ_10_17}}
+    fig, ax = plt.subplots(1, figsize=(10, 5))
+    pd.DataFrame(four_yr_results).plot(kind="bar", ax=ax)
+    plt.xlabel("Time Period")
+    plt.ylabel("Percent Different")
+    plt.ylim(7.5, 27)
+    plt.title("4-Year Instituition Costs Percent Difference")
+    plt.legend()
+    plt.savefig('FourYrPercentDif.png')
 
-fig, ax = plt.subplots(1, figsize=(10, 5))
-pd.DataFrame(four_yr_results).plot(kind="bar", ax=ax)
-plt.xlabel("Time Period")
-plt.ylabel("Percent Different")
-plt.ylim(7.5, 27)
-plt.title("4-Year Instituition Costs Percent Difference")
-plt.legend()
-plt.savefig('FourYrPercentDif.png')
+    # this is for the graph with the costs on average
+    ten_cost = yr_cost_ten(twentyten_csv)
+    seventeen_cost = yr_cost_seventeen(twentyseventeen_csv)
+    # getting the averages into variables
+    ave_cost_ten_two = ten_cost["mean2"]
+    ave_cost_seventeen_two = seventeen_cost["mean2"]
+    ave_cost_ten_four = ten_cost["mean4"]
+    ave_cost_seventeen_four = seventeen_cost["mean4"]
+    # putting it with inflation
+    infla_ten_two = college_cost_infla(ave_cost_ten_two, 2010)
+    infla_seventeen_two = college_cost_infla(ave_cost_seventeen_two, 2017)
+    infla_ten_four = college_cost_infla(ave_cost_ten_four, 2010)
+    infla_seventeen_four = college_cost_infla(ave_cost_seventeen_four, 2017)
+    # now can get each point for line graph x= year and y = cost
+    # have to make it a connected dictionary
+    dic_ave_ten_two = {2005 : infla_ten_two[2005], 2010:
+                       infla_ten_two[2010], 2017: infla_ten_two[2017]}
+    dic_ave_seventeen_two = {2005 : infla_seventeen_two[2005], 2010:
+                             infla_seventeen_two[2010], 2017:
+                             infla_seventeen_two[2017]}
+    dic_ave_ten_four = {2005 : infla_ten_four[2005], 2010:
+                        infla_ten_four[2010], 2017: infla_ten_four[2017]}
+    dic_ave_seventeen_four = {2005 : infla_seventeen_four[2005], 2010:
+                              infla_seventeen_four[2010], 2017:
+                              infla_seventeen_four[2017]}
+  
+    fig, ax = plt.subplots(1, figsize=(10,5))
+    # then this is for all the axes
+    ave_ten_two_x = list(dic_ave_ten_two.keys())
+    ave_ten_two_y = list(dic_ave_ten_two.values())
+    ave_seventeen_two_x = list(dic_ave_seventeen_two.keys())
+    ave_seventeen_two_y = list(dic_ave_seventeen_two.values())
+    ave_ten_four_x = list(dic_ave_ten_four.keys())
+    ave_ten_four_y = list(dic_ave_ten_four.values())
+    ave_seventeen_four_x = list(dic_ave_seventeen_four.keys())
+    ave_seventeen_four_y = list(dic_ave_seventeen_four.values())
+    years = [2005, 2010, 2017]
 
-# this is for the graph with the costs on average
-ten_cost = yr_cost_ten(twentyten_csv)
-seventeen_cost = yr_cost_seventeen(twentyseventeen_csv)
-# getting the averages into variables
-ave_cost_ten_two = ten_cost["mean2"]
-ave_cost_seventeen_two = seventeen_cost["mean2"]
-ave_cost_ten_four = ten_cost["mean4"]
-ave_cost_seventeen_four = seventeen_cost["mean4"]
-# putting it with inflation
-infla_ten_two = college_cost_infla(ave_cost_ten_two, 2010)
-infla_seventeen_two = college_cost_infla(ave_cost_seventeen_two, 2017)
-infla_ten_four = college_cost_infla(ave_cost_ten_four, 2010)
-infla_seventeen_four = college_cost_infla(ave_cost_seventeen_four, 2017)
-# now can get each point for line graph x= year and y = cost
-# have to make it a connected dictionary
-dic_ave_ten_two = {2005 : infla_ten_two[2005], 2010: infla_ten_two[2010], 2017: infla_ten_two[2017]}
-dic_ave_seventeen_two = {2005 : infla_seventeen_two[2005], 2010: infla_seventeen_two[2010], 2017: infla_seventeen_two[2017]}
-dic_ave_ten_four = {2005 : infla_ten_four[2005], 2010: infla_ten_four[2010], 2017: infla_ten_four[2017]}
-dic_ave_seventeen_four = {2005 : infla_seventeen_four[2005], 2010: infla_seventeen_four[2010], 2017: infla_seventeen_four[2017]}
-
-fig, ax = plt.subplots(1, figsize=(10,5))
-# then this is for all the axes
-ave_ten_two_x = list(dic_ave_ten_two.keys())
-ave_ten_two_y = list(dic_ave_ten_two.values())
-ave_seventeen_two_x = list(dic_ave_seventeen_two.keys())
-ave_seventeen_two_y = list(dic_ave_seventeen_two.values())
-ave_ten_four_x = list(dic_ave_ten_four.keys())
-ave_ten_four_y = list(dic_ave_ten_four.values())
-ave_seventeen_four_x = list(dic_ave_seventeen_four.keys())
-ave_seventeen_four_y = list(dic_ave_seventeen_four.values())
-years = [2005, 2010, 2017]
-
-ax.plot(ave_ten_two_x, ave_ten_two_y, marker="o", markersize=8,
+    ax.plot(ave_ten_two_x, ave_ten_two_y, marker="o", markersize=8,
         label="2-Year 2010")
-ax.plot(ave_seventeen_two_x, ave_seventeen_two_y, marker="o",
+    ax.plot(ave_seventeen_two_x, ave_seventeen_two_y, marker="o",
         markersize=8,label="2-Year 2017")
-ax.plot(ave_ten_four_x, ave_ten_four_y, marker="o", markersize=8,
+    ax.plot(ave_ten_four_x, ave_ten_four_y, marker="o", markersize=8,
         label="4-Year 2010")
-ax.plot(ave_seventeen_four_x, ave_seventeen_four_y, marker="o",
+    ax.plot(ave_seventeen_four_x, ave_seventeen_four_y, marker="o",
         markersize=8, label="4-Year 2017")
 
-plt.xlabel("Year")
-ax.set_xticks([2005, 2010, 2017])
-plt.ylabel("Cost")
-plt.title("Inflation of Each Years Cost")
-plt.legend()
-plt.savefig('InflationPerYear.png')
+    plt.xlabel("Year")
+    ax.set_xticks([2005, 2010, 2017])
+    plt.ylabel("Cost")
+    plt.title("Inflation of Each Years Cost")
+    plt.legend()
+    plt.savefig('InflationPerYear.png')
+
+
+if __name__ == "__main__":
+    main()
