@@ -8,3 +8,10 @@ If there is anything we need to do to set up your project, like install
 libraries or how to download your data (if you did not submit it), give us
 instructions for how to do so.
 Anything else we need to know about running your project!
+
+
+To reproduce results for Research Question 1:
+Run Cost_living_nums.py
+
+
+
